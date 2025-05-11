@@ -25,15 +25,14 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'org.mybatis:mybatis:3.5.15'
 	implementation 'org.mybatis:mybatis-spring:3.0.3'
 	implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
-	implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.4.Final'
 	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 	implementation 'jakarta.platform:jakarta.jakartaee-api:10.0.0'
 	implementation 'org.modelmapper:modelmapper:3.2.0'

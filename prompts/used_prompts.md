@@ -144,11 +144,16 @@
 
 ---
 
-## 12. 사용 내역 정리 요청
+## 12. SQLite 초기화 코드 보완 요청
 
 **프롬프트:**
-> prompts/used_prompts.md에 Markdown 형식으로 작성을 해야해.  
-> 내가 지금까지 입력한 프롬프트 원본과 답변 내용을 정리해서 작성해줘.
+> SQLLite 초기화 코드를 확인 및 보완해줘
+> 초기화 파일은 schema.sql야
 
 **응답 요약:**
-- 본 문서 작성
+- `DBInitializer` 클래스 구현: CommandLineRunner를 사용하여 애플리케이션 시작 시 schema.sql 실행
+- schema.sql 파일 보완: 인덱스 추가 및 테이블 구조 최적화
+- 데이터베이스 상태 확인 유틸리티 클래스(`DatabaseHealthChecker`) 구현
+- 데이터베이스 상태 확인 API(`/admin/database/health`) 구현
+- Spring Security 설정에 상태 확인 엔드포인트 접근 허용 추가
+- 테스트 환경용 schema.sql 설정 분리

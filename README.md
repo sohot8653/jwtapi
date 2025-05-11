@@ -13,6 +13,11 @@ Spring Boot와 JWT를 이용한 인증 기반 REST API 프로젝트입니다.
 - JUnit & JaCoCo (테스트 및 커버리지)
 - Swagger (API 문서화)
 
+## 개발 환경
+
+- JDK 17
+- IDE - Cursor(claude-3.7-sonnet)
+
 ## 실행 방법
 
 ### 요구사항

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jwtapi.mapper.TodoMapper">
+    <resultMap id="todoResultMap" type="com.example.jwtapi.model.Todo">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="completed" column="completed" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+    
+    <insert id="insertTodo" parameterType="com.example.jwtapi.model.Todo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO todos (user_id, title, content, completed, created_at, updated_at)
+        VALUES (#{userId}, #{title}, #{content}, #{completed}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    </insert>
+    
+    <select id="findAllByUserId" parameterType="long" resultMap="todoResultMap">
+        SELECT * FROM todos WHERE user_id = #{userId} ORDER BY created_at DESC
+    </select>
+    
+    <select id="findByIdAndUserId" resultMap="todoResultMap">
+        SELECT * FROM todos WHERE id = #{id} AND user_id = #{userId}
+    </select>
+    
+    <update id="updateTodo" parameterType="com.example.jwtapi.model.Todo">
+        UPDATE todos
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="completed != null">completed = #{completed},</if>
+            updated_at = CURRENT_TIMESTAMP
+        </set>
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+    
+    <delete id="deleteTodo">
+        DELETE FROM todos WHERE id = #{id} AND user_id = #{userId}
+    </delete>
+    
+    <select id="searchTodos" resultMap="todoResultMap">
+        SELECT * FROM todos
+        <where>
+            user_id = #{userId}
+            <if test="keyword != null and keyword != ''">
+                AND (title LIKE '%' || #{keyword} || '%' OR content LIKE '%' || #{keyword} || '%')
+            </if>
+            <if test="completed != null">
+                AND completed = #{completed}
+            </if>
+        </where>
+        ORDER BY created_at DESC
+    </select>
+</mapper> 

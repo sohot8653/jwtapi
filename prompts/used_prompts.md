@@ -187,3 +187,21 @@
 - `AdminService` 클래스 구현: 데이터베이스 초기화 기능을 제공하는 서비스
 - 데이터베이스 초기화 API(`/admin/database/reset`) 구현: 관리자 권한으로 데이터베이스를 초기화할 수 있는 엔드포인트
 - schema.sql 파일을 직접 읽어서 실행하도록 개선: 코드 중복 제거 및 유지보수성 향상
+
+---
+
+## 13. 코드 정리 요청
+
+**프롬프트:**
+
+> 구현한 전체 디렉터리 기준으로, 사용되지 않는 의존성이나 import, method 등을 정리해줘
+
+**응답 요약:**
+
+- build.gradle 파일에서 중복된 MyBatis 의존성 정리
+- 불필요한 Jakarta EE API 의존성 제거
+- 주석 처리된 자바 버전 설정 정리 (명시적 sourceCompatibility 설정)
+- Controller 클래스에서 사용되지 않는 Swagger 관련 import 제거 (Content, Schema 등)
+- AdminService 클래스에서 사용되지 않는 import 제거 (I/O 관련)
+- application.properties의 로깅 레벨을 적절히 조정 (DEBUG → INFO)
+- README.md 파일의 Spring Boot 버전 정보 수정 (3.4.5 → 3.2.3)

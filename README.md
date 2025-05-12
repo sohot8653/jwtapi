@@ -5,7 +5,7 @@ Spring Boot와 JWT를 이용한 인증 기반 REST API 프로젝트입니다.
 ## 기술 스택
 
 - Java
-- Spring Boot 3.4.5
+- Spring Boot 3.2.3
 - Spring Security
 - MyBatis
 - SQLite

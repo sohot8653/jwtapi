@@ -5,11 +5,13 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jwtapi.dto.ApiResponse;
 import com.example.jwtapi.util.DatabaseHealthChecker;
+import com.example.jwtapi.service.AdminService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 
     private final DatabaseHealthChecker databaseHealthChecker;
+    private final AdminService adminService;
     
     /**
      * 데이터베이스 상태를 확인합니다.
@@ -46,6 +49,15 @@ public class AdminController {
             return ResponseEntity.status(503) // Service Unavailable
                     .body(ApiResponse.error("데이터베이스에 문제가 있습니다: " + healthStatus.get("error"), healthStatus));
         }
+    }
+
+    @Operation(summary = "데이터베이스 초기화", description = "데이터베이스를 초기화합니다. (주의: 모든 데이터가 삭제됩니다)")
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/database/reset")
+    public ResponseEntity<ApiResponse<Void>> resetDatabase() {
+        adminService.resetDatabase();
+        return ResponseEntity.ok(ApiResponse.success("데이터베이스가 초기화되었습니다.", null));
     }
 } 
  

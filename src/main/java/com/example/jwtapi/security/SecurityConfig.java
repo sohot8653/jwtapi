@@ -37,7 +37,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/users/signup", "/users/login").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/admin/database/health").permitAll()  // 데이터베이스 상태 확인 엔드포인트 허용
+                .requestMatchers("/admin/database/health", "/admin/database/reset").permitAll()  // 데이터베이스 관련 엔드포인트 허용
                 .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, objectMapper), UsernamePasswordAuthenticationFilter.class);

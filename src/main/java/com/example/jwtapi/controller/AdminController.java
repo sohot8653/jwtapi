@@ -52,8 +52,6 @@ public class AdminController {
     }
 
     @Operation(summary = "데이터베이스 초기화", description = "데이터베이스를 초기화합니다. (주의: 모든 데이터가 삭제됩니다)")
-    @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/database/reset")
     public ResponseEntity<ApiResponse<Void>> resetDatabase() {
         adminService.resetDatabase();

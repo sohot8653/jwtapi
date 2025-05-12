@@ -49,30 +49,30 @@ gradlew.bat bootRun
 4. 애플리케이션 접속
 
 - API 서버: http://localhost:8080
-- Swagger UI: http://localhost:8080/swagger-ui.html
+- Swagger UI: http://localhost:8080/swagger-ui/index.html
 
 ## API 명세 요약
 
 ### 사용자 API
 
-| 메소드 | 엔드포인트     | 설명                   | 인증 필요 |
-|--------|----------------|------------------------|-----------|
-| POST   | /users/signup  | 회원가입               | 아니오    |
-| POST   | /users/login   | 로그인 (JWT 토큰 발급) | 아니오    |
-| GET    | /users/me      | 내 정보 조회           | 예        |
-| PUT    | /users/me      | 내 정보 수정           | 예        |
-| DELETE | /users/me      | 회원 탈퇴              | 예        |
+| 메소드 | 엔드포인트    | 설명                   | 인증 필요 |
+| ------ | ------------- | ---------------------- | --------- |
+| POST   | /users/signup | 회원가입               | 아니오    |
+| POST   | /users/login  | 로그인 (JWT 토큰 발급) | 아니오    |
+| GET    | /users/me     | 내 정보 조회           | 예        |
+| PUT    | /users/me     | 내 정보 수정           | 예        |
+| DELETE | /users/me     | 회원 탈퇴              | 예        |
 
 ### Todo API
 
-| 메소드 | 엔드포인트        | 설명            | 인증 필요 |
-|--------|--------------------|-----------------|-----------|
-| POST   | /todos             | Todo 생성       | 예        |
-| GET    | /todos             | Todo 목록 조회  | 예        |
-| GET    | /todos/{id}        | Todo 상세 조회  | 예        |
-| PUT    | /todos/{id}        | Todo 수정       | 예        |
-| DELETE | /todos/{id}        | Todo 삭제       | 예        |
-| GET    | /todos/search      | Todo 검색       | 예        |
+| 메소드 | 엔드포인트    | 설명           | 인증 필요 |
+| ------ | ------------- | -------------- | --------- |
+| POST   | /todos        | Todo 생성      | 예        |
+| GET    | /todos        | Todo 목록 조회 | 예        |
+| GET    | /todos/{id}   | Todo 상세 조회 | 예        |
+| PUT    | /todos/{id}   | Todo 수정      | 예        |
+| DELETE | /todos/{id}   | Todo 삭제      | 예        |
+| GET    | /todos/search | Todo 검색      | 예        |
 
 ## 인증 방식
 
@@ -96,4 +96,4 @@ gradlew.bat test
 gradlew.bat jacocoTestReport
 ```
 
-테스트 커버리지 리포트는 `build\reports\jacoco\html\index.html`에서 확인할 수 있습니다. 
+테스트 커버리지 리포트는 `build\reports\jacoco\html\index.html`에서 확인할 수 있습니다.

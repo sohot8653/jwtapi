@@ -205,3 +205,60 @@
 - AdminService 클래스에서 사용되지 않는 import 제거 (I/O 관련)
 - application.properties의 로깅 레벨을 적절히 조정 (DEBUG → INFO)
 - README.md 파일의 Spring Boot 버전 정보 수정 (3.4.5 → 3.2.3)
+
+---
+
+## 14. Google OAuth2 소셜 로그인 구현 요청
+
+**프롬프트:**
+
+> Google OAuth2 소셜 로그인을 추가하려고 해.
+> 사용자가 Google로 로그인하면 서버는 Google에서 사용자 정보를 받아 DB에 저장하고, JWT 토큰을 발급해서 응답해야하고, 테스트 코드 작성이 필요해.
+> 프론트엔드가 따로 구현되어있지 않아, 테스트 페이지도 하나 작성해줘.
+
+**응답 요약:**
+
+- Spring Boot OAuth2 Client 의존성 추가
+- Google OAuth2 연동을 위한 설정 (application.properties)
+- User 모델에 Google ID, 프로필 이미지, 인증 제공자 필드 추가
+- 데이터베이스 스키마 업데이트
+- UserMapper XML 및 인터페이스 수정
+- OAuth2 인증 처리 서비스 구현
+- OAuth2 컨트롤러 구현
+- 테스트 HTML 페이지 생성
+- OAuth2 관련 endpoint 접근 보안 설정
+- 단위 테스트 코드 작성
+- 테스트 환경 설정
+
+---
+
+## 15. OAuth2 테스트 페이지 인증 생략 요청
+
+**프롬프트:**
+
+> /oauth2-test 이 테스트 페이지 JWT 인증 검사 생략해줘
+
+**응답 요약:**
+
+- SecurityConfig 클래스 수정
+- `/oauth2/**`와 함께 `/oauth2-test` 경로를 인증 생략 목록에 추가
+- 보안 설정 업데이트: `.requestMatchers("/oauth2/**", "/oauth2-test").permitAll()`
+- 이제 OAuth2 테스트 페이지가 인증 없이 접근 가능
+
+---
+
+## 16. SQLite 데이터베이스 초기화 스크립트 작성
+
+**프롬프트:**
+
+> 데이터 초기화를 위해 init_db.sql을 작성해주고, 해당 파일을 활용한 sqlite3 스크립트를 README.md에 넣어줘
+
+**응답 요약:**
+
+- init_db.sql 파일 생성: 데이터베이스 초기화를 위한 통합 SQL 스크립트
+- 외래키 제약조건 활성화
+- 테이블 삭제 및 재생성
+- 인덱스 생성
+- 샘플 데이터 삽입
+- README.md에 SQLite 데이터베이스 초기화 명령어 추가: `sqlite3 database.sqlite < init_db.sql`
+- 이 명령어를 통해 간단하게 데이터베이스 초기화 가능

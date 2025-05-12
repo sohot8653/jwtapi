@@ -17,6 +17,9 @@ public class UserDTO {
     private String password;
     private String email;
     private String name;
+    private String googleId;
+    private String profileImage;
+    private String authProvider;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 } 

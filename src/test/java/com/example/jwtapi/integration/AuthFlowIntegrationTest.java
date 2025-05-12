@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -29,16 +30,27 @@ class AuthFlowIntegrationTest extends AbstractTestBase {
     
     @Test
     @DisplayName("인증 통합 플로우 테스트")
+    @Sql(statements = {
+        "DELETE FROM todos", 
+        "DELETE FROM users"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void testAuthFlow() throws Exception {
-        // 1단계: 테스트 데이터베이스 초기화
-        jdbcTemplate.execute("DELETE FROM users");
-        
         // 2단계: 회원가입 통합 테스트
         UserSignupVO userSignupVO = TestUtil.createTestUserSignupVO();
+        
+        // 디버깅을 위한 출력
+        System.out.println("회원가입 요청 데이터: " + objectMapper.writeValueAsString(userSignupVO));
         
         ResultActions signupResult = mockMvc.perform(post("/users/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userSignupVO)));
+        
+        // 디버깅을 위해 응답 본문 출력
+        MvcResult signupMvcResult = signupResult.andReturn();
+        if (signupMvcResult.getResponse().getStatus() != 200) {
+            System.out.println("회원가입 응답 상태: " + signupMvcResult.getResponse().getStatus());
+            System.out.println("회원가입 응답 본문: " + signupMvcResult.getResponse().getContentAsString());
+        }
         
         signupResult.andExpect(status().isOk())
               .andExpect(jsonPath("$.success").value(true))
@@ -72,9 +84,9 @@ class AuthFlowIntegrationTest extends AbstractTestBase {
         
         authResult.andExpect(status().isOk())
               .andExpect(jsonPath("$.success").value(true))
-              .andExpect(jsonPath("$.data.username").value("testuser"))
-              .andExpect(jsonPath("$.data.email").value("test@example.com"))
-              .andExpect(jsonPath("$.data.name").value("Test User"));
+              .andExpect(jsonPath("$.data.username").value(userSignupVO.getUsername()))
+              .andExpect(jsonPath("$.data.email").value(userSignupVO.getEmail()))
+              .andExpect(jsonPath("$.data.name").value(userSignupVO.getName()));
         
         // 5단계: JWT 없이 접근 시 401 응답 테스트
         ResultActions unauthorizedResult = mockMvc.perform(get("/users/me")

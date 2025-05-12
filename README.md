@@ -12,6 +12,7 @@ Spring Boot와 JWT를 이용한 인증 기반 REST API 프로젝트입니다.
 - JWT (JSON Web Token)
 - JUnit & JaCoCo (테스트 및 커버리지)
 - Swagger (API 문서화)
+- Google OAuth2 (소셜 로그인)
 
 ## 개발 환경
 
@@ -50,6 +51,85 @@ gradlew.bat bootRun
 
 - API 서버: http://localhost:8080
 - Swagger UI: http://localhost:8080/swagger-ui/index.html
+- OAuth2 테스트 페이지: http://localhost:8080/oauth2-test
+
+## 사용 방법
+
+### 회원가입 및 로그인
+
+1. 일반 회원가입
+
+   - `/users/signup` API를 통해 회원가입
+   - 필요한 정보: username, password, email, name
+
+2. 일반 로그인
+
+   - `/users/login` API를 통해 로그인
+   - username과 password를 제공하면 JWT 토큰 발급
+
+3. 소셜 로그인 (Google)
+   - `/oauth2/login/google`로 리다이렉트하여 Google 로그인 페이지로 이동
+   - 또는 테스트 페이지(http://localhost:8080/oauth2-test)에서 "Google로 로그인" 버튼 클릭
+   - 로그인 성공 시 JWT 토큰 발급
+
+### API 인증
+
+발급받은 JWT 토큰을 HTTP 요청의 헤더에 포함시켜 인증합니다.
+
+```
+Authorization: Bearer {token}
+```
+
+### Todo 관리
+
+1. Todo 생성
+
+   - `/todos` API에 POST 요청으로 새 Todo 생성
+   - 필요한 정보: title, content
+
+2. Todo 조회
+
+   - `/todos` - 모든 Todo 목록 조회
+   - `/todos/{id}` - 특정 Todo 상세 조회
+   - `/todos/search` - 조건에 맞는 Todo 검색
+
+3. Todo 수정 및 삭제
+   - `/todos/{id}` - PUT 요청으로 Todo 수정
+   - `/todos/{id}` - DELETE 요청으로 Todo 삭제
+
+### 데이터베이스 관리
+
+- 이 기능은 개발 환경에서만 사용하는 것을 권장합니다.
+
+#### SQLite 데이터베이스 초기화
+
+```
+sqlite3 database.sqlite < init_db.sql
+```
+
+#### SQLite 데이터베이스 직접 조회
+
+SQLite3 명령어를 사용하여 데이터베이스를 직접 조회할 수 있습니다:
+
+1. 테이블 목록 확인
+
+```
+sqlite3 database.sqlite ".tables"
+```
+
+2. 테이블 스키마 확인
+
+```
+sqlite3 database.sqlite ".schema users"
+sqlite3 database.sqlite ".schema todos"
+```
+
+3. 데이터 조회
+
+```
+sqlite3 -header -column database.sqlite "SELECT * FROM users;"
+sqlite3 -header -column database.sqlite "SELECT * FROM todos;"
+```
 
 ## API 명세 요약
 
@@ -74,15 +154,14 @@ gradlew.bat bootRun
 | DELETE | /todos/{id}   | Todo 삭제      | 예        |
 | GET    | /todos/search | Todo 검색      | 예        |
 
-## 인증 방식
+### OAuth2 API
 
-JWT 토큰 기반 인증을 사용합니다.
-
-1. `/users/login` API를 통해 인증 후 JWT 토큰 발급
-2. 발급받은 토큰을 API 요청 시 Authorization 헤더에 포함
-   ```
-   Authorization: Bearer {token}
-   ```
+| 메소드 | 엔드포인트           | 설명                        | 인증 필요 |
+| ------ | -------------------- | --------------------------- | --------- |
+| GET    | /oauth2/login/google | Google 로그인 페이지로 이동 | 아니오    |
+| GET    | /oauth2/callback     | OAuth2 인증 후 콜백 처리    | 아니오    |
+| GET    | /oauth2/success      | 로그인 성공 및 토큰 반환    | 아니오    |
+| GET    | /oauth2/test         | OAuth2 로그인 테스트 페이지 | 아니오    |
 
 ## 테스트 실행
 

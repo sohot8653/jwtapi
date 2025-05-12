@@ -6,9 +6,12 @@
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
+    password VARCHAR(100),
     email VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
+    google_id VARCHAR(100),
+    profile_image VARCHAR(255),
+    auth_provider VARCHAR(20),
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL
 );

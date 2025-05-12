@@ -17,6 +17,9 @@ public class User {
     private String password;
     private String email;
     private String name;
+    private String googleId;     // Google OAuth2 사용자 ID
+    private String profileImage; // 프로필 이미지 URL
+    private String authProvider; // 인증 제공자 (GOOGLE, LOCAL)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 } 

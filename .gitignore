@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Database ###
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal

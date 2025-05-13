@@ -99,6 +99,14 @@ Authorization: Bearer {token}
 
 #### SQLite 데이터베이스 초기화
 
+데이터베이스 초기화를 위해 제공된 `init_db.sql` 스크립트를 사용할 수 있습니다. 이 스크립트는 다음과 같은 작업을 수행합니다:
+
+- 테이블 구조 생성 (users, todos)
+- 인덱스 생성
+- 테스트용 샘플 데이터 추가
+
+초기화 명령어 (Windows CMD에서 실행):
+
 ```
 sqlite3 database.sqlite < init_db.sql
 ```
@@ -171,4 +179,4 @@ gradlew.bat test
 gradlew.bat jacocoTestReport
 ```
 
-테스트 커버리지 리포트는 `build\reports\jacoco\html\index.html`에서 확인할 수 있습니다.
+테스트 커버리지 리포트는 `build/reports/jacoco/html/index.html`에서 확인할 수 있습니다.

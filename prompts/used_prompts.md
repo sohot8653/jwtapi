@@ -1,7 +1,5 @@
 # AI 프롬프트 사용 내역
 
-이 문서는 기술과제 수행 중 AI를 활용해 요청한 프롬프트와 그에 대한 응답 내용을 정리한 것입니다.
-
 ---
 
 ## 1. SQLite3 JDBC 드라이버 및 Mybatis 설정을 해줘
@@ -263,38 +261,17 @@
 - README.md에 SQLite 데이터베이스 초기화 명령어 추가: `sqlite3 database.sqlite < init_db.sql`
 - 이 명령어를 통해 간단하게 데이터베이스 초기화 가능
 
-## JWT Token Response Format Change
+## 17. JWT Token Response Format Change
 
-### Question
+**프롬프트:**
 
-로그인 성공시, 토큰 정보를 body로 내려주고있는데, 이걸 Header에서 response 하도록 변경해줘.
+> 로그인 성공시, 토큰 정보를 body로 내려주고있는데, 이걸 Header에서 response 하도록 변경해줘.
 
-### Solution
+**응답 요약:**
 
-1. `UserController`의 login 메서드를 수정하여 토큰을 `Authorization` 헤더로 전달하도록 변경했습니다.
-2. 기존의 response body에서 토큰 정보를 제거하고, 성공 메시지만 포함하도록 수정했습니다.
-
-### Key Changes
-
-1. `ResponseEntity` 반환 타입을 `ApiResponse<Map<String, String>>`에서 `ApiResponse<Void>`로 변경
-2. 토큰을 `Authorization` 헤더에 "Bearer " 접두사와 함께 추가
-3. response body에서 토큰 정보 제거
-
-### Benefits
-
-- 표준 인증 헤더 사용으로 보안성 향상
-- 클라이언트 구현 단순화 (헤더를 그대로 재사용 가능)
+- `UserController`의 login 메서드 수정: 토큰을 `Authorization` 헤더로 전달
+- `ResponseEntity` 반환 타입을 `ApiResponse<Map<String, String>>`에서 `ApiResponse<Void>`로 변경
+- 토큰을 `Authorization` 헤더에 "Bearer " 접두사와 함께 추가
+- response body에서 토큰 정보 제거하고 성공 메시지만 포함
+- 표준 인증 헤더 사용으로 보안성 향상 및 클라이언트 구현 단순화
 - 로깅 시 토큰 노출 위험 감소
-
-### Code Changes
-
-```java
-@PostMapping("/login")
-public ResponseEntity<ApiResponse<Void>> login(@Valid @RequestBody UserLoginVO userLoginVO) {
-    String token = userService.login(userLoginVO);
-    return ResponseEntity
-        .ok()
-        .header("Authorization", "Bearer " + token)
-        .body(ApiResponse.success("로그인이 완료되었습니다.", null));
-}
-```

@@ -28,26 +28,19 @@ Spring Boot와 JWT를 이용한 인증 기반 REST API 프로젝트입니다.
 
 ### 설치 및 실행
 
-1. 프로젝트 클론
-
-```cmd
-git clone https://github.com/sohot8653/jwtapi.git
-cd jwtapi
-```
-
-2. 프로젝트 빌드
+1. 프로젝트 빌드
 
 ```cmd
 gradlew.bat build
 ```
 
-3. 애플리케이션 실행
+2. 애플리케이션 실행
 
 ```cmd
 gradlew.bat bootRun
 ```
 
-4. 애플리케이션 접속
+3. 애플리케이션 접속
 
 - API 서버: http://localhost:8080
 - Swagger UI: http://localhost:8080/swagger-ui/index.html

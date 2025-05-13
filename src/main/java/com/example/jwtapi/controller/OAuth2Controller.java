@@ -52,7 +52,7 @@ public class OAuth2Controller {
     @Operation(summary = "Google 로그인 콜백", description = "Google에서 리다이렉트된 코드로 인증 처리 후 JWT 토큰 발급")
     @GetMapping("/callback")
     public void callback(
-            @Parameter(description = "Google에서 제공한 인증 코드") @RequestParam String code,
+            @Parameter(description = "Google에서 제공한 인증 코드") @RequestParam("code") String code,
             HttpServletResponse response) throws Exception {
         String token = oAuth2Service.processOAuth2Login(code);
         

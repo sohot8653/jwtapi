@@ -66,16 +66,11 @@ class AuthFlowIntegrationTest extends AbstractTestBase {
                 .content(objectMapper.writeValueAsString(userLoginVO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.token").isNotEmpty())
+                .andExpect(header().exists("Authorization"))
                 .andReturn();
         
         // JWT 토큰 저장
-        String responseContent = loginResult.getResponse().getContentAsString();
-        ApiResponse<Map<String, String>> apiResponse = objectMapper.readValue(
-                responseContent, 
-                new TypeReference<ApiResponse<Map<String, String>>>() {});
-        
-        String jwtToken = apiResponse.getData().get("token");
+        String jwtToken = loginResult.getResponse().getHeader("Authorization").replace("Bearer ", "");
         
         // 4단계: JWT 인증 통합 테스트 - 내 정보 조회
         ResultActions authResult = mockMvc.perform(get("/users/me")

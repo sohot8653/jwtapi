@@ -51,11 +51,12 @@ public class UserController {
         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증 실패")
     })
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<Map<String, String>>> login(@Valid @RequestBody UserLoginVO userLoginVO) {
+    public ResponseEntity<ApiResponse<Void>> login(@Valid @RequestBody UserLoginVO userLoginVO) {
         String token = userService.login(userLoginVO);
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        return ResponseEntity.ok(ApiResponse.success("로그인이 완료되었습니다.", response));
+        return ResponseEntity
+            .ok()
+            .header("Authorization", "Bearer " + token)
+            .body(ApiResponse.success("로그인이 완료되었습니다.", null));
     }
 
     @Operation(summary = "내 정보 조회", description = "인증된 사용자의 정보를 조회합니다.")

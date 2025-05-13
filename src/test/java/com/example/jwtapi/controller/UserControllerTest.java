@@ -78,7 +78,7 @@ class UserControllerTest extends AbstractTestBase {
         // Then
         result.andExpect(status().isOk())
               .andExpect(jsonPath("$.success").value(true))
-              .andExpect(jsonPath("$.data.token").value(token));
+              .andExpect(header().string("Authorization", "Bearer " + token));
     }
     
     @Test

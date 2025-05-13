@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.jwtapi.dto.UserDTO;
+import com.example.jwtapi.exception.DuplicateUsernameException;
 import com.example.jwtapi.exception.ResourceNotFoundException;
 import com.example.jwtapi.mapper.UserMapper;
 import com.example.jwtapi.model.User;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO signup(UserSignupVO userSignupVO) {
         // 이미 존재하는 사용자 확인
         if (userMapper.findByUsername(userSignupVO.getUsername()) != null) {
-            throw new RuntimeException("Username already exists");
+            throw new DuplicateUsernameException(userSignupVO.getUsername());
         }
         
         // VO -> DTO 변환

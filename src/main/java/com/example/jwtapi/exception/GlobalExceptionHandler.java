@@ -43,6 +43,13 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error("유효성 검사 실패", errors));
     }
     
+    @ExceptionHandler(DuplicateUsernameException.class)
+    public ResponseEntity<ApiResponse<Object>> handleDuplicateUsernameException(DuplicateUsernameException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGlobalException(Exception ex) {
         return ResponseEntity

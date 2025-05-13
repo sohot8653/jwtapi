@@ -97,17 +97,13 @@ Authorization: Bearer {token}
    - `/todos/{id}` - PUT 요청으로 Todo 수정
    - `/todos/{id}` - DELETE 요청으로 Todo 삭제
 
-### 데이터베이스 관리
-
-- 이 기능은 개발 환경에서만 사용하는 것을 권장합니다.
-
 #### SQLite 데이터베이스 초기화
 
 ```
 sqlite3 database.sqlite < init_db.sql
 ```
 
-#### SQLite 데이터베이스 직접 조회
+#### SQLite 데이터베이스 조회
 
 SQLite3 명령어를 사용하여 데이터베이스를 직접 조회할 수 있습니다:
 

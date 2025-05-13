@@ -68,7 +68,7 @@ public class TodoController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<TodoDTO>> getTodoById(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-            @Parameter(description = "Todo ID", required = true) @PathVariable Long id) {
+            @Parameter(description = "Todo ID", required = true) @PathVariable("id") Long id) {
         TodoDTO todoDTO = todoService.getTodoById(userDetails.getUsername(), id);
         return ResponseEntity.ok(ApiResponse.success(todoDTO));
     }
@@ -84,7 +84,7 @@ public class TodoController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<TodoDTO>> updateTodo(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-            @Parameter(description = "Todo ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Todo ID", required = true) @PathVariable("id") Long id,
             @Valid @RequestBody TodoUpdateVO todoUpdateVO) {
         TodoDTO todoDTO = todoService.updateTodo(userDetails.getUsername(), id, todoUpdateVO);
         return ResponseEntity.ok(ApiResponse.success("Todo가 업데이트되었습니다.", todoDTO));
@@ -100,7 +100,7 @@ public class TodoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteTodo(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-            @Parameter(description = "Todo ID", required = true) @PathVariable Long id) {
+            @Parameter(description = "Todo ID", required = true) @PathVariable("id") Long id) {
         todoService.deleteTodo(userDetails.getUsername(), id);
         return ResponseEntity.ok(ApiResponse.success("Todo가 삭제되었습니다.", null));
     }

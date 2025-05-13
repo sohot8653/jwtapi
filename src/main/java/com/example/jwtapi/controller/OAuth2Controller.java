@@ -63,7 +63,7 @@ public class OAuth2Controller {
     @Operation(summary = "OAuth2 로그인 성공", description = "토큰이 발급된 후 리다이렉트되는 페이지")
     @GetMapping("/success")
     public ResponseEntity<ApiResponse<Map<String, String>>> success(
-            @Parameter(description = "발급된 JWT 토큰") @RequestParam String token) {
+            @Parameter(description = "발급된 JWT 토큰") @RequestParam("token") String token) {
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return ResponseEntity.ok(ApiResponse.success("소셜 로그인이 완료되었습니다.", response));
